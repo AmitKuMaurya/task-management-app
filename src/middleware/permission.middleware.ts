@@ -4,15 +4,14 @@ export const isPermitable = (permissions : string) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { user } = req;
-      console.log('user: ', user);
       
       console.log('permissions: ', permissions);
       const checkUserId = await UserModel.findById({ _id: user }).select(
         "+permission"
         );
-        console.log('checkUserId: ', checkUserId);
+  
       const userPermission = checkUserId?.permission as any;
-      console.log('userPermission: ', userPermission);
+
       if (checkUserId) {
         if (permissions === userPermission) {
           next();

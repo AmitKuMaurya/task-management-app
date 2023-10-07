@@ -42,8 +42,6 @@ export const login = async (req: Request, res: Response) => {
 
     try {
         const { email, password }: IUserLogin = req.body;
-        console.log('req.body: ', req.body);
-
 
         const user = await UserModel.findOne({ email: email }).select("+password");
         if (!user?.email) return res.status(404).send({msg : "User doesn't exits in DataBase !!"});

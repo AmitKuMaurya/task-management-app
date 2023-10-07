@@ -19,7 +19,6 @@ export const Authentication = async (req: Request, res: Response, next: NextFunc
 
         if (checkUserInDB) {
             req['user'] = decodeToken['id'].toString();
-            console.log('req[user] ', req['user']);
             next();
         } else {
             next("User doesn't exist !")
