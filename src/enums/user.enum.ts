@@ -4,8 +4,8 @@ export enum Roles {
 }
 
 export enum Permission {
-    READ = "read",
-    CREATE = "create",
-    UPDATE = "update",
-    DELETE = "delete"
+    READ,
+    CREATE,
+    UPDATE,
+    DELETE
 }

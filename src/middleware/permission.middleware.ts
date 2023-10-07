@@ -1,11 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import UserModel from "../model/users.schema";
-export const isPermitable = (permissions : string) => {
+export const isPermitable = (permissions : number) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { user } = req;
-      
-      console.log('permissions: ', permissions);
+    
       const checkUserId = await UserModel.findById({ _id: user }).select(
         "+permission"
         );
@@ -13,7 +12,7 @@ export const isPermitable = (permissions : string) => {
       const userPermission = checkUserId?.permission as any;
 
       if (checkUserId) {
-        if (permissions === userPermission) {
+        if (userPermission.indexOf(permissions) !== -1) {
           next();
         } else {
           return res.send({msg : "Access Denied !, You donn't have permission to perform that acticity !"});
