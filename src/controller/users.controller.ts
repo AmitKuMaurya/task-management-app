@@ -8,6 +8,10 @@ export const register = async (req: Request, res: Response) => {
         const { email, password, confirmPassword, permission, role }: IUser =
             req.body;
 
+        if(password !== confirmPassword) {
+            return res.status(401).send({ error: "password and confirm password mismatched !" });
+        }
+
         const userExist = await UserModel.findOne({ email: email });
         if (userExist) return res.status(401).send({ msg: "User already exist!" });
 
