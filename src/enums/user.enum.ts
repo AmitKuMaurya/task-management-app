@@ -1,11 +1,11 @@
-enum Roles {
+export enum Roles {
     MANAGER,
     CANDIDATE
 }
 
-enum Permission {
-    READ,
-    CREATE,
-    UPDATE,
-    DELETE
+export enum Permission {
+    READ = "read",
+    CREATE = "create",
+    UPDATE = "update",
+    DELETE = "delete"
 }

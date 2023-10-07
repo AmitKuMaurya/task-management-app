@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { Permission, Roles } from "../enums/user.enum";
 
 interface IUser {
     email: string;
@@ -11,8 +12,8 @@ interface IUser {
 const UserSchema = new Schema({
     email: { type: String, require: true },
     password: { type: String, require: true, select: false },
-    role: { type: String, require: true },
-    permission: { type: [Permission], require: true }
+    permission: { type: [Number] , require: true, default : Permission.READ  },
+    role: { type: Number, require: true, default : Roles.CANDIDATE  }
 }, {
     timestamps: true
 });
