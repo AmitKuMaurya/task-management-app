@@ -1,7 +1,7 @@
 import {Router} from "express";
 import { createTag, deleteTag, listTags, updateStatus, updateTag } from "../controller/tags.controller";
-import { Authentication } from "../middleware/auth";
-import { isAuthorised } from "../middleware/role";
+import { Authentication } from "../middleware/auth.middleware";
+import { isAuthorised } from "../middleware/role.middleware";
 import { Roles } from "../enums/user.enum";
 
 export const tagRouter = Router();

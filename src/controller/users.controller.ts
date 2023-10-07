@@ -9,11 +9,11 @@ export const register = async (req: Request, res: Response) => {
             req.body;
 
         if(password !== confirmPassword) {
-            return res.status(401).send({ error: "password and confirm password mismatched !" });
+            return res.status(422).send({ error: "password and confirm password mismatched !" });
         }
 
         const userExist = await UserModel.findOne({ email: email });
-        if (userExist) return res.status(401).send({ msg: "User already exist!" });
+        if (userExist) return res.status(409).send({ msg: "User already exist!" });
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -34,7 +34,7 @@ export const register = async (req: Request, res: Response) => {
         res.status(201).json({ token, createUser });
     } catch (err) {
         console.log({ err: err });
-        res.status(501).send({ err: err });
+        res.status(501).send({ err: "Internal Server Error" });
     }
 };
 
@@ -44,14 +44,13 @@ export const login = async (req: Request, res: Response) => {
         const { email, password }: IUserLogin = req.body;
         console.log('req.body: ', req.body);
 
-        // if (req.body = {}) return res.send("Invalid User Credentials !!");
 
         const user = await UserModel.findOne({ email: email }).select("+password");
-        if (!user) return res.send("User does not exits in DataBase !!");
+        if (!user?.email) return res.status(404).send({msg : "User doesn't exits in DataBase !!"});
 
         const compare = (await bcrypt.compare(password, user.password));
 
-        if (!compare) return (`CREDENTIALS ARE NOT VALID !!`);
+        if (!compare) return res.status(404).send({msg : "CREDENTIALS ARE NOT VALID "});
 
         if (compare) {
             const token = sign({ email: user.email, id : user._id }, "JWTSECRET", {
@@ -65,7 +64,7 @@ export const login = async (req: Request, res: Response) => {
         }
     } catch (error) {
         console.log({ error: error });
-        res.status(501).send(error);
+        res.status(501).send({error : 'Internal Server Error'});
     }
 
 };
