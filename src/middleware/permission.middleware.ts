@@ -1,22 +1,26 @@
 import { Request, Response, NextFunction } from "express";
 import UserModel from "../model/users.schema";
-export const isPermitable = (...roles: number[]) => {
+export const isPermitable = (permissions : string) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { user } = req;
-
+      console.log('user: ', user);
+      
+      console.log('permissions: ', permissions);
       const checkUserId = await UserModel.findById({ _id: user }).select(
-        "+role"
-      );
-      const userRole = checkUserId?.role as any;
+        "+permission"
+        );
+        console.log('checkUserId: ', checkUserId);
+      const userPermission = checkUserId?.permission as any;
+      console.log('userPermission: ', userPermission);
       if (checkUserId) {
-        if (roles.indexOf(userRole) !== -1) {
+        if (permissions === userPermission) {
           next();
         } else {
-          return res.send("Access Denied !");
+          return res.send({msg : "Access Denied !, You donn't have permission to perform that acticity !"});
         }
       } else {
-        return res.send("User Dosen't exost in db !");
+        return res.send({msg : "User Dosen't exost in db !"});
       }
     } catch (err) {
       console.log({ err: err });

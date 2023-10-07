@@ -13,10 +13,10 @@ export const isAuthorised = (...roles: number[]) => {
         if (roles.indexOf(userRole) !== -1) {
           next();
         } else {
-          return res.send("Access Denied !");
+          return res.status(401).send({ msg : "Access Denied !, you are unAuthorised !"});
         }
       } else {
-        return res.send("User Dosen't exost in db !");
+        return res.status(404).send({msg : "User Doesn't exist in db !"});
       }
     } catch (err) {
       console.log({ err: err });
