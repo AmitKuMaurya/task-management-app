@@ -12,7 +12,7 @@ const TagSchema = new Schema({
     title: { type: String, require: true },
     userId : { type : Types.ObjectId, require : true, ref : 'user'},
     description: { type: String, require: true },
-    state: { type: String, require: true, default : Status.ASSIGNED  },
+    status: { type: String, require: true, default : Status.ASSIGNED, enum : Status  },
     deadlines : { type : String, require : true}
 }, {
     timestamps: true
