@@ -13,7 +13,7 @@ const UserSchema = new Schema({
     email: { type: String, require: true },
     password: { type: String, require: true, select: false },
     permission: { type: [Number] , require: true, default : Permission.READ  },
-    role: { type: Number, require: true, default : Roles.CANDIDATE  }
+    role: { type: Number, require: true, select: false , default : Roles.CANDIDATE  }
 }, {
     timestamps: true
 });

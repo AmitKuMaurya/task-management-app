@@ -31,12 +31,13 @@ export const listTags = async (req : Request, res : Response) => {
 }
 
 export const updateTag = async (req : Request, res : Response) => {
-
+    res.status(200).send({ error: "Hello !" });
 }
 export const updateStatus = async (req : Request, res : Response) => {
+    res.status(200).send({ error: "Hello !" });
     
 }
 export const deleteTag = async (req : Request, res : Response) => {
-
+    res.status(200).send({ error: "Hello !" });
 }
  
